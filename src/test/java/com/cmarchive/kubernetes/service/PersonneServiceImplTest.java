@@ -1,8 +1,10 @@
 package com.cmarchive.kubernetes.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.mock;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,5 +37,38 @@ public class PersonneServiceImplTest {
 
         then(personneRepository).should().findAllByOrderByNom();
         assertThat(resultat).containsExactlyElementsOf(personnes);
+    }
+
+    @Test
+    public void recupererPersonne_Nominal() {
+        Long id = 1L;
+        Personne personne = mock(Personne.class);
+        given(personneRepository.findByPersonneId(eq(id))).willReturn(personne);
+
+        Personne resultat = personneService.get(id);
+
+        then(personneRepository).should().findByPersonneId(eq(id));
+        assertThat(personne).isEqualTo(resultat);
+    }
+
+    @Test
+    public void sauvegarderPersonne_Nominal() {
+        Personne personne = mock(Personne.class);
+        Personne personneSauvegarde = mock(Personne.class);
+        given(personneRepository.save(personne)).willReturn(personneSauvegarde);
+
+        Personne resultat = personneService.save(personne);
+
+        then(personneRepository).should().save(personne);
+        assertThat(personneSauvegarde).isEqualTo(resultat);
+    }
+
+    @Test
+    public void supprimerPersonne_Nominal() {
+        Personne personne = mock(Personne.class);
+
+        personneService.delete(personne);
+
+        then(personneRepository).should().delete(personne);
     }
 }

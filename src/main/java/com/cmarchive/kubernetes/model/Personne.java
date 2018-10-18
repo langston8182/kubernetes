@@ -1,10 +1,17 @@
 package com.cmarchive.kubernetes.model;
 
 import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Personne {
 
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long personneId;
     private String nom;
     private String prenom;
     private LocalDate dateNaissance;
@@ -18,35 +25,39 @@ public class Personne {
         this.dateNaissance = dateNaissance;
     }
 
-    public Long getId() {
-        return id;
+    public Long getPersonneId() {
+        return personneId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Personne withPersonneId(Long id) {
+        this.personneId = id;
+        return this;
     }
 
     public String getNom() {
         return nom;
     }
 
-    public void setNom(String nom) {
+    public Personne withNom(String nom) {
         this.nom = nom;
+        return this;
     }
 
     public String getPrenom() {
         return prenom;
     }
 
-    public void setPrenom(String prenom) {
+    public Personne withPrenom(String prenom) {
         this.prenom = prenom;
+        return this;
     }
 
     public LocalDate getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(LocalDate dateNaissance) {
+    public Personne withDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
+        return this;
     }
 }
