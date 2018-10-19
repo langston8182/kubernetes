@@ -4,17 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.cmarchive.kubernetes.model.Personne;
 
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
 public class PersonneRepositoryTest {
 
@@ -39,13 +38,9 @@ public class PersonneRepositoryTest {
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void recupererPersonne_Nominal() {
-        Personne personne = new Personne()
-                .withDateNaissance(LocalDate.of(1982, 1, 8))
-                .withNom("Marchive")
-                .withPrenom("Cyril");
-        entityManager.persist(personne);
-        entityManager.flush();
+        Personne personne = creerPersonne();
 
         Personne resultat = personneRepository.findByPersonneId(1L);
 
@@ -68,15 +63,20 @@ public class PersonneRepositoryTest {
 
     @Test
     public void supprimerPersonne_Nominal() {
+        Personne personne = creerPersonne();
+
+        personneRepository.delete(personne);
+
+        assertThat(personneRepository.findAll()).isEmpty();
+    }
+
+    private Personne creerPersonne() {
         Personne personne = new Personne()
                 .withDateNaissance(LocalDate.of(1982, 1, 8))
                 .withNom("Marchive")
                 .withPrenom("Cyril");
         entityManager.persist(personne);
         entityManager.flush();
-
-        personneRepository.delete(personne);
-
-        assertThat(personneRepository.findAll()).isEmpty();
+        return personne;
     }
 }

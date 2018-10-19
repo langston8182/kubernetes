@@ -8,6 +8,6 @@ public interface PersonneService {
     List<Personne> list();
     Personne get(Long id);
     Personne save(Personne personne);
-    void delete(Personne personne);
+    void delete(Long id);
 
 }

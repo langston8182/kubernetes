@@ -32,7 +32,7 @@ public class PersonneServiceImpl implements PersonneService{
     }
 
     @Override
-    public void delete(Personne personne) {
-        personneRepository.delete(personne);
+    public void delete(Long id) {
+        personneRepository.deleteById(id);
     }
 }
