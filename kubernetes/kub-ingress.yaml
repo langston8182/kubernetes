@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kub-ingress
+spec:
+  rules:
+  - host: kubernetes
+    http:
+      paths:
+      - backend:
+          serviceName: kub-services
+          servicePort: 8080
