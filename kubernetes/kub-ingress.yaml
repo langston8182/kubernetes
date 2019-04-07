@@ -4,7 +4,7 @@ metadata:
   name: kub-ingress
 spec:
   rules:
-  - host: kubernetes
+  - host: masters.kubernetes.cyrilmarchive.com
     http:
       paths:
       - backend:

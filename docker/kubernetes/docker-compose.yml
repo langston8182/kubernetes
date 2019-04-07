@@ -1,5 +1,5 @@
-db:
-  image: kubernetes
+kubernetes:
+  image: langston8182/kubernetes:0.0.8-SNAPSHOT
   environment:
     DATABASE_HOST: 172.17.0.1
     DATABASE_PORT: 3307

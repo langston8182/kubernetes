@@ -13,8 +13,11 @@ spec:
         app: kubernetes
     spec:
       containers:
+      - name: nginx
+        image: nginx
       - name: kubernetes
-        image: langston8182/kubernetes:0.0.4-SNAPSHOT
+        image: langston8182/kubernetes:0.0.9-SNAPSHOT
+        imagePullPolicy: Always
         env:
         - name: DATABASE_HOST
           value: db-services

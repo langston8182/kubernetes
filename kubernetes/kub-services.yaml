@@ -5,9 +5,10 @@ metadata:
   labels:
     app: kubernetes
 spec:
+  selector:
+    app: kubernetes
+  type: NodePort
   ports:
   - port: 8080
     targetPort: 8080
-    protocol: TCP
-  selector:
-    app: kubernetes
+    nodePort: 31100
